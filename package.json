@@ -1,5 +1,5 @@
 {
-  "name": "prometheus-test",
+  "name": "restcountries-test",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
