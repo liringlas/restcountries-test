@@ -167,12 +167,20 @@ export const countryPageFieldsRenderer = (country: ICountry) => {
                             <CountryPageFieldCell key={field}>
                                 <CountryPageFieldTitle>Coordinates</CountryPageFieldTitle>
                                 <CountryPageFieldText>
-                                    <ExternalLink 
-                                        href={getGoogleMapsLinkFromLatLng(latitude, longitude)}
-                                        target={"_blank"}
-                                    >
-                                        Google Maps
+                                    <p>
+                                        <ExternalLink 
+                                            href={getGoogleMapsLinkFromLatLng(latitude, longitude)}
+                                            target={"_blank"}
+                                        >
+                                            Google Maps
                                         </ExternalLink>
+                                    </p>
+                                    <p>
+                                        <span>{`Latitude: ${latitude}`}</span>
+                                    </p>
+                                    <p>
+                                        <span>{`Longitude: ${longitude}`}</span>
+                                    </p>
                                 </CountryPageFieldText>
                             </CountryPageFieldCell>
                         )
