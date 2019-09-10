@@ -1,6 +1,7 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import toJS from 'await-to-js';
+import styled from 'styled-components';
 
 import { Content } from '../styled/Content';
 import { ContentHeading } from '../styled/ContentHeading';
@@ -12,8 +13,13 @@ import { CountryListItem } from '../components/CountryListItem';
 
 import { ISharedPageProps, ICountry, TParamsType, TSortField, TSortOrder } from '../types';
 import { fetchRegionCountries } from '../service/fetchRegionCountries';
+import { StyledLink } from '../styled/StyledLink';
 
-
+const OtherRegionsRow = styled.div`
+    font-size: 24px;
+    color: white;
+    margin-bottom: 48px;
+`
 
 const sortedCountriesRenderer = (countries: ICountry[]) => (sortField: TSortField) => (sortOrder: TSortOrder) => {
     const primaryOrderValue = sortOrder === 'asc' ? -1 : 1;
@@ -30,7 +36,7 @@ const sortedCountriesRenderer = (countries: ICountry[]) => (sortField: TSortFiel
 }
 
 export const RegionPage: React.FC<RouteComponentProps<{}> & ISharedPageProps> = (props: RouteComponentProps<{}> & ISharedPageProps) => {
-    const { match } = props;
+    const { match, regions } = props;
     const regionName = (match.params as TParamsType)['name'] || 'Unknown region';
 
     const [ countries, setCountries ] = React.useState<ICountry[]>([]);
@@ -41,6 +47,9 @@ export const RegionPage: React.FC<RouteComponentProps<{}> & ISharedPageProps> = 
 
     // Effects
     React.useEffect( () => {
+        setIsLoading(true);
+        setIsLoadingFailed(false);
+
         const getRegionCountries = async () => {
             const [ err, countries ] = await toJS<ICountry[]>(
                 fetchRegionCountries(regionName)
@@ -66,6 +75,13 @@ export const RegionPage: React.FC<RouteComponentProps<{}> & ISharedPageProps> = 
                 ? <Spinner /> 
                 : <React.Fragment>
                     <ContentHeading>{regionName}</ContentHeading>
+                    <OtherRegionsRow>Other regions:
+                        { regions.filter( region => region !== regionName )
+                            .map( region => 
+                                <StyledLink to={`/region/${region}`}>{region}</StyledLink> 
+                            )
+                        }
+                    </OtherRegionsRow>
                     <CountriesSortingComponent 
                         sortingSchemas={[
                             {

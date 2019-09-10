@@ -43,11 +43,11 @@ const SortingItem = styled.div<{ isActive?: boolean }>`
 
 const SortingWrapper = styled.div`
     display: flex;
-    flex: 1 0 100%;
     margin-bottom: 48px;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
+    width: 100%;
 `
 
 const SortingFields = styled.div`

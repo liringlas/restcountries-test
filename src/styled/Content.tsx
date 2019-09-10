@@ -8,8 +8,7 @@ export const Content = styled.div`
     min-height: calc(100vh - ${cssVars.headerHeight} - 32px);
     background-color: ${cssVars.color.main};
     padding: 32px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: flex-start;
-    flex-direction: row;
 `
