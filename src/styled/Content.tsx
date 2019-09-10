@@ -11,4 +11,5 @@ export const Content = styled.div`
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
+    flex-direction: row;
 `

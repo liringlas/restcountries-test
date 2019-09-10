@@ -8071,6 +8071,11 @@ react-app-polyfill@^1.0.2:
     regenerator-runtime "0.13.3"
     whatwg-fetch "3.0.0"
 
+react-css-spinners@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-css-spinners/-/react-css-spinners-3.1.1.tgz#30e84660555581659e11dfae63d82d57bf8c2c63"
+  integrity sha512-RBJOyyHr5wk72SgTwBpVbPKfYuaWg8yLqMDyVZE5owHrmcnDT3rT1cDi+DpAjwbhnr2gobBTg+o5Qt9nz7HyiQ==
+
 react-dev-utils@^9.0.3:
   version "9.0.3"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-9.0.3.tgz#7607455587abb84599451460eb37cef0b684131a"

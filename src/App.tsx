@@ -1,27 +1,35 @@
 import React from 'react';
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { createGlobalStyle } from 'styled-components';
 
 import { Wrapper } from './styled/Wrapper';
 import { Header } from './styled/Header';
 import { HeaderHeading } from './styled/HeaderHeading';
+import { cssVars } from './styled/vars';
 
 import { MainPage } from './pages/MainPage';
 import { RegionPage } from './pages/RegionPage';
 import { CountryPage } from './pages/CountryPage';
 
 // I had to hardcore those values since I found no API reference for fetching them on https://restcountries.eu
+const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${cssVars.color.light};    
+  }
+`
 
 const App: React.FC = () => {
   const regions = [ 'Africa', 'Americas', 'Asia', 'Europe', 'Oceania' ];
-  const [ isLoading, setIsLoading ] = React.useState(false);
-  const [ statusCode, setStatusCode ] = React.useState<number>(200);
 
   return (
     <Router>
+      <GlobalStyle />
       <Wrapper>
         <Header>
-          <HeaderHeading>restcountries.eu | Regions data</HeaderHeading>
+          <HeaderHeading>
+            <Link to={"/"}>restcountries.eu | Regions data</Link>
+          </HeaderHeading>
         </Header>
 
         <Switch>

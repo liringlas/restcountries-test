@@ -6,4 +6,14 @@ export const HeaderHeading = styled.h1`
     line-height: 1.4;
     margin: 0;
     flex: 1 0 100%;
+
+    a {
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:visited {
+            color: white;
+        }
+    }
 `
