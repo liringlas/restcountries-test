@@ -3,7 +3,7 @@ import { cssVars } from './vars'
 
 export const Wrapper = styled.div`
     margin: auto;
-    max-width: 1440px;
+    max-width: 100%;
     min-height: 100vh;
     width: 100%;
     display: flex;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { ICountry, TSortField } from '../types';
 import { StyledLink } from '../styled/StyledLink';
+import { cssVars } from '../styled/vars';
 
 const CountryWrapper = styled.div`
     flex-wrap: wrap;
@@ -17,6 +18,11 @@ const CountryHighlight = styled.h2`
     flex: 1 0 100%;
     margin: 0 0 16px 0;
     text-transform: capitalize;
+    font-size: 16px;
+
+    @media ${cssVars.breakpoints.tablet} {
+        font-size: 24px;
+    }
 `
 
 const CountryFieldCell = styled.div`
@@ -31,13 +37,17 @@ const CountryFieldTitle = styled.div`
 `
 
 const FlagImage = styled.img`
-    width: 64px;
+    width: 32px;
     height: auto;
     display: inline-block;
     margin-left: 16px;
     position: absolute;
     top: 0;
     right: 0;
+
+    @media ${cssVars.breakpoints.tablet} {
+        width: 64px;
+    }
 `
 
 export const CountryListItem = (props: { country: ICountry, sortField: TSortField }) => {

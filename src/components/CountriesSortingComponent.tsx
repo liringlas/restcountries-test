@@ -26,6 +26,7 @@ const SortingItem = styled.div<{ isActive?: boolean }>`
     font-size: 18px;
     padding: 12px;
     border-radius: 4px;
+    margin-bottom: 12px;
 
     &:not(:last-child) {
         margin-right: 16px;
@@ -48,14 +49,20 @@ const SortingWrapper = styled.div`
     justify-content: space-between;
     align-items: flex-start;
     width: 100%;
+    flex-wrap: wrap;
+
+    @media ${cssVars.breakpoints.tablet} {
+        flex-wrap: nowrap;
+    }
 `
 
-const SortingFields = styled.div`
-    flex: 0 0 auto;
-`
+const SortingBlock = styled.div`
+    flex: 1 0 100%;
+    margin-bottom: 16px;
 
-const SortingOrders = styled.div`
-    flex: 0 0 auto;
+    @media ${cssVars.breakpoints.tablet} {
+        flex: 0 0 auto;
+    }
 `
 
 const SortingHeading = styled.h2`
@@ -71,15 +78,15 @@ export const CountriesSortingComponent = (props: ICountriesSortingProps) => {
         <>
             <SortingHeading>Sorting</SortingHeading>
             <SortingWrapper>
-                <SortingFields>
+                <SortingBlock>
                     {
                         sortingSchemas.map( ({field, orders, text}) => (
                             <SortingItem key={field} isActive={sortField === field} onClick={() => setSortField(field)}>{text}</SortingItem>
                         ))
                     }
-                </SortingFields>
+                </SortingBlock>
 
-                <SortingOrders>
+                <SortingBlock>
                     {
                         activeSortingSchema 
                             ? activeSortingSchema.orders.map(
@@ -88,7 +95,7 @@ export const CountriesSortingComponent = (props: ICountriesSortingProps) => {
                             )
                             : null
                     }
-                </SortingOrders>
+                </SortingBlock>
 
             </SortingWrapper>
         </>

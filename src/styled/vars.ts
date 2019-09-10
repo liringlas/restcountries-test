@@ -4,5 +4,8 @@ export const cssVars = {
     'dark': "#002984",
     'light': '#757de8',
   },
-  headerHeight: '64px'
+  headerHeight: '64px',
+  breakpoints: {
+    tablet: "(min-width: 720px)"
+  }
 }

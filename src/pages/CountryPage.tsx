@@ -1,82 +1,58 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import toJS from 'await-to-js';
 
 import { Content } from '../styled/Content';
-import { ContentHeading } from '../styled/ContentHeading';
-import { ISharedPageProps } from '../types';
+import { CountryPageWrapper } from '../styled/CountryPageWrapper';
+import { CountryPageName } from '../styled/CountryPageName';
+
+import { countryPageFieldsRenderer } from '../renderers/countryPageFieldsRenderer';
+
+import { fetchCountry } from '../service/fetchCountry';
+
+import { ISharedPageProps, TParamsType, ICountry } from '../types';
+import { Spinner } from '../styled/Spinner';
 
 export const CountryPage: React.FC<RouteComponentProps<{}> & ISharedPageProps> = (props: RouteComponentProps<{}> & ISharedPageProps) => {
-    console.log('props: ', props);
+    const { match } = props;
+    const countryName = (match.params as TParamsType)['name'] || 'Unknown region';
 
+    const [ country, setCountry ] = React.useState<ICountry>();
+    const [ isLoading, setIsLoading ] = React.useState(true);
+
+    // Effects
+    React.useEffect( () => {
+        setIsLoading(true);
+
+        const getCountry = async () => {
+            const [ err, countries ] = await toJS<ICountry[]>(
+                fetchCountry(countryName)
+            );
+
+            if (err) {
+                setIsLoading(false);
+                return;
+            }
+
+            setIsLoading(false);
+            setCountry(countries && countries.length > 0 ? countries[0] : undefined);
+        }
+
+        getCountry();
+    }, [countryName]);
+    
     return (
         <Content>
-            <ContentHeading>Country</ContentHeading>
+            {
+                isLoading || !country 
+                    ? <Spinner />
+                    : (
+                        <CountryPageWrapper>
+                            <CountryPageName>{`${country.name} (${country.nativeName})`}</CountryPageName>
+                            { countryPageFieldsRenderer(country) }
+                        </CountryPageWrapper>
+                    )
+                }
         </Content>
     );
 }
-
-
-// const CountryWrapper = styled.div`
-//     flex-wrap: wrap;
-//     display: flex;
-//     justify-content: flex-start;
-//     align-items: stretch;
-// `
-
-// const CountryHighlight = styled.h3`
-//     flex: 1 0 100%;
-//     margin: 0 0 32px 0;
-// `
-
-// const CountryFieldCell = styled.div`
-//     flex: 1 1 33%;
-// `
-
-// const CountryFieldTitle = styled.h4`
-//     font-size: 18px;
-//     margin: 0 0 12px 0;
-// `
-
-// const CountryFieldText = styled.div``
-
-// export const CountryListItem = (props: { country: ICountry, sortField: TSortField }) => {
-//     const { country, sortField } = props;
-//     const { 
-//         alpha2Code, alpha3Code, altSpellings, area, borders, 
-//         callingCodes, capital, cioc, currencies, demonym, 
-//         flag, gini, languages, latlng, name, 
-//         nativeName, numericCode, population, region, regionalBlocs, 
-//         subregion, timezones, topLevelDomain, translations
-//     } = country;
-//     const sortedCountryFields = (Object.keys(country) as Array<keyof ICountry>).sort();
-    
-//     return (
-//         <CountryWrapper>
-//             <CountryHighlight>
-//                 {String(sortField).toUpperCase()}: {sortField === 'name' ? name : population}
-//             </CountryHighlight>
-
-//             { sortedCountryFields.map( (field: keyof ICountry) => {
-
-//                 switch(field as keyof ICountry) {
-//                     case 'name': {
-//                         return (
-//                             <CountryFieldCell key={field}>
-//                                 <CountryFieldTitle>Name</CountryFieldTitle>
-//                                 <CountryFieldText>{country[field]}</CountryFieldText>
-//                             </CountryFieldCell>
-//                         )
-//                     }
-//                     default: {
-//                         return (
-//                             <CountryFieldCell key={field}>
-//                                 <CountryFieldTitle>{String(field).toUpperCase()}</CountryFieldTitle>
-//                                 <CountryFieldText>{JSON.stringify(country[field])}</CountryFieldText>
-//                             </CountryFieldCell>
-//                         )
-//                     }
-//                 }
-//             }) }
-//         </CountryWrapper>
-//     );
-// }

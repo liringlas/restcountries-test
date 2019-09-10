@@ -1,6 +1,14 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
+const RingWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+`
+
 const Ring = styled.div`
     display: inline-block;
     position: relative;
@@ -43,9 +51,11 @@ const RingChild = styled.div`
 `
   
 
-export const Spinner = () => <Ring>
-    <RingChild></RingChild>
-    <RingChild></RingChild>
-    <RingChild></RingChild>
-    <RingChild></RingChild>
-</Ring>;
+export const Spinner = () => <RingWrapper>
+    <Ring>
+        <RingChild></RingChild>
+        <RingChild></RingChild>
+        <RingChild></RingChild>
+        <RingChild></RingChild>
+    </Ring>
+</RingWrapper>;

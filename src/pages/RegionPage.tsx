@@ -1,39 +1,18 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import toJS from 'await-to-js';
-import styled from 'styled-components';
 
 import { Content } from '../styled/Content';
 import { ContentHeading } from '../styled/ContentHeading';
-import { CountryList } from '../styled/CountryList';
 import { Spinner } from '../styled/Spinner';
+import { StyledLink } from '../styled/StyledLink';
+import { OtherRegionsRow } from '../styled/OtherRegionsRow';
 
 import { CountriesSortingComponent } from '../components/CountriesSortingComponent';
-import { CountryListItem } from '../components/CountryListItem';
+import { sortedCountriesRenderer } from '../renderers/sortedCountriesRenderer';
 
 import { ISharedPageProps, ICountry, TParamsType, TSortField, TSortOrder } from '../types';
 import { fetchRegionCountries } from '../service/fetchRegionCountries';
-import { StyledLink } from '../styled/StyledLink';
-
-const OtherRegionsRow = styled.div`
-    font-size: 24px;
-    color: white;
-    margin-bottom: 48px;
-`
-
-const sortedCountriesRenderer = (countries: ICountry[]) => (sortField: TSortField) => (sortOrder: TSortOrder) => {
-    const primaryOrderValue = sortOrder === 'asc' ? -1 : 1;
-    const oppositeOrderValue = primaryOrderValue * -1;
-
-    return countries.sort((prev: ICountry, next: ICountry) => {
-        return next[sortField] > prev[sortField] 
-            ? primaryOrderValue
-            : next[sortField] < prev[sortField]
-                ? oppositeOrderValue
-                : 0;
-
-    }).map( country => <CountryListItem sortField={sortField} key={country.name} country={country} />);
-}
 
 export const RegionPage: React.FC<RouteComponentProps<{}> & ISharedPageProps> = (props: RouteComponentProps<{}> & ISharedPageProps) => {
     const { match, regions } = props;
@@ -42,13 +21,11 @@ export const RegionPage: React.FC<RouteComponentProps<{}> & ISharedPageProps> = 
     const [ countries, setCountries ] = React.useState<ICountry[]>([]);
     const [ sortField, setSortField ] = React.useState<TSortField>('name');
     const [ sortOrder, setSortOrder ] = React.useState<TSortOrder>('asc');
-    const [ isLoadingFailed, setIsLoadingFailed ] = React.useState(false);
     const [ isLoading, setIsLoading ] = React.useState(true);
 
     // Effects
     React.useEffect( () => {
         setIsLoading(true);
-        setIsLoadingFailed(false);
 
         const getRegionCountries = async () => {
             const [ err, countries ] = await toJS<ICountry[]>(
@@ -57,17 +34,15 @@ export const RegionPage: React.FC<RouteComponentProps<{}> & ISharedPageProps> = 
 
             if (err) {
                 setIsLoading(false);
-                setIsLoadingFailed(true);
                 return;
             }
 
             setIsLoading(false);
-            setIsLoadingFailed(false);
             setCountries(countries || []);
         }
 
         getRegionCountries();
-    }, [isLoadingFailed, regionName]);
+    }, [regionName]);
 
     return (
         <Content>
@@ -78,7 +53,10 @@ export const RegionPage: React.FC<RouteComponentProps<{}> & ISharedPageProps> = 
                     <OtherRegionsRow>Other regions:
                         { regions.filter( region => region !== regionName )
                             .map( region => 
-                                <StyledLink to={`/region/${region}`}>{region}</StyledLink> 
+                                <React.Fragment key={region}>
+                                    <StyledLink to={`/region/${region}`}>{region}</StyledLink>
+                                    &nbsp;&nbsp;
+                                </React.Fragment>
                             )
                         }
                     </OtherRegionsRow>
@@ -118,9 +96,7 @@ export const RegionPage: React.FC<RouteComponentProps<{}> & ISharedPageProps> = 
                         setSortField={setSortField}
                         setSortOrder={setSortOrder}
                     />
-                    <CountryList>
-                        { sortedCountriesRenderer(countries)(sortField)(sortOrder) }
-                    </CountryList> 
+                    { sortedCountriesRenderer(countries)(sortField)(sortOrder) }
                 </React.Fragment>
         }
             
