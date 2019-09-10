@@ -12,7 +12,6 @@ import { MainPage } from './pages/MainPage';
 import { RegionPage } from './pages/RegionPage';
 import { CountryPage } from './pages/CountryPage';
 
-// I had to hardcore those values since I found no API reference for fetching them on https://restcountries.eu
 const GlobalStyle = createGlobalStyle`
   body {
     background-color: ${cssVars.color.light};    
@@ -20,6 +19,9 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const App: React.FC = () => {
+  // I had to hardcore those values since I found no API reference 
+  // for fetching them from https://restcountries.eu
+  // Also, data memoization was omitted for the sake of simplicity of this project
   const regions = [ 'Africa', 'Americas', 'Asia', 'Europe', 'Oceania' ];
 
   return (
