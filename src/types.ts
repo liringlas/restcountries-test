@@ -43,7 +43,6 @@ export interface ICountry {
 
 export interface ISharedPageProps {
     regions: Array<string>;
-    // setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 export type TParamsType = { [key: string]: string };

@@ -50,7 +50,7 @@ export const RegionPage: React.FC<RouteComponentProps<{}> & ISharedPageProps> = 
                 ? <Spinner /> 
                 : <React.Fragment>
                     <ContentHeading>{regionName}</ContentHeading>
-                    <OtherRegionsRow>Other regions:
+                    <OtherRegionsRow>Other regions:&nbsp;&nbsp;
                         { regions.filter( region => region !== regionName )
                             .map( region => 
                                 <React.Fragment key={region}>
