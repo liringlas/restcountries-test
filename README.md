@@ -6,11 +6,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Getting Started
 
-First of all, you have to install all project dependencies bu rugging
+First of all, you have to install all project dependencies by running
 
 ### `npm i`
 
-command inside repository folder.
+console command inside repository folder.
 
 Then, you can run:
 
