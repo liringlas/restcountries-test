@@ -19,7 +19,8 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const App: React.FC = () => {
-  // I had to hardcore those values since I found no API reference 
+
+  // I had to hardcode those values since I found no API reference 
   // for fetching them from https://restcountries.eu
   // Also, data memoization was omitted for the sake of simplicity of this project
   const regions = [ 'Africa', 'Americas', 'Asia', 'Europe', 'Oceania' ];
