@@ -4,15 +4,19 @@ import styled, { css } from 'styled-components';
 import { TSortField, TSortOrder } from '../types';
 import { cssVars } from '../styled/vars';
 
+interface ISortingSchemaOrder {
+    text: string;
+    value: TSortOrder;
+}
+
+interface ISortingSchema {
+    field: TSortField;
+    text: string;
+    orders: Array<ISortingSchemaOrder>;
+}
+
 interface ICountriesSortingProps {
-    sortingSchemas: {
-        field: TSortField,
-        text: string,
-        orders: {
-            text: string,
-            value: TSortOrder
-        }[]
-    }[];
+    sortingSchemas: Array<ISortingSchema>;
     sortField: TSortField;
     sortOrder: TSortOrder;
     setSortField: React.Dispatch<React.SetStateAction<TSortField>>;
